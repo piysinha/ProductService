@@ -13,7 +13,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/*This is a rest controller*/
 @RestController("")
 @RequestMapping("/products")
 public class ProductController{
