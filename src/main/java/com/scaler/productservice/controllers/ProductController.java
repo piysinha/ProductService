@@ -52,7 +52,7 @@ public class ProductController{
         return response;
     }
 
-
+    /*Updating a product*/
     @PutMapping("/{productId}")
     public String updateProduct(@PathVariable("productId") Long productId){
         return "Updating Product";
