@@ -1,6 +1,7 @@
 package com.scaler.productservice.controllers;
 
 import com.scaler.productservice.dtos.ProductDto;
+import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,17 @@ public class ProductController{
 
     /*Updating a product*/
     @PutMapping("/{productId}")
-    public String updateProduct(@PathVariable("productId") Long productId){
-        return "Updating Product";
+    public Product updateProduct(@PathVariable("productId") Long productId,
+                                @RequestBody ProductDto productDto){
+        Product product = new Product();
+        product.setId(productDto.getId());
+        product.setCategory(new Category());
+        product.getCategory().setName(productDto.getCategory());
+        product.setPrice(productDto.getPrice());
+        product.setDescription(productDto.getDescription());
+        product.setTitle(productDto.getTitle());
+
+        return productService.updateProduct(productId,product);
     }
 
     @DeleteMapping("/{productId}")
