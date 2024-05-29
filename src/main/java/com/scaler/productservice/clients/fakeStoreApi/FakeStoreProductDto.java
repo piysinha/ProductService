@@ -1,5 +1,6 @@
-package com.scaler.productservice.dtos;
+package com.scaler.productservice.clients.fakeStoreApi;
 
+import com.scaler.productservice.dtos.RatingDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
