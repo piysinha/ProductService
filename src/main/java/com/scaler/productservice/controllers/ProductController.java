@@ -1,5 +1,7 @@
 package com.scaler.productservice.controllers;
 
+import com.scaler.productservice.ProductServiceApplication;
+import com.scaler.productservice.dtos.FakeStoreProductDto;
 import com.scaler.productservice.dtos.ProductDto;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -54,16 +57,18 @@ public class ProductController{
     }
 
     /*Updating a product*/
-    @PutMapping("/{productId}")
+
+    @PatchMapping("/{productId}")
     public Product updateProduct(@PathVariable("productId") Long productId,
                                 @RequestBody ProductDto productDto){
+
         Product product = new Product();
         product.setId(productDto.getId());
         product.setCategory(new Category());
         product.getCategory().setName(productDto.getCategory());
+        product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
         product.setDescription(productDto.getDescription());
-        product.setTitle(productDto.getTitle());
 
         return productService.updateProduct(productId,product);
     }
