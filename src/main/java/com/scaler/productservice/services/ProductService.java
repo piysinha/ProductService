@@ -4,7 +4,6 @@ import com.scaler.productservice.dtos.ProductDto;
 import com.scaler.productservice.exceptions.NotFoundException;
 import com.scaler.productservice.models.Product;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
