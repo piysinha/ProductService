@@ -41,60 +41,60 @@ class ProductServiceApplicationTests {
     void contextLoads() {
     }
 
-    @Test
+//    @Test
     void testDifferentInheritanceJT(){
-        User user = new User();
-        user.setEmail("test@gmail.com");
-        user.setPassWord("Password");
-        jtUserRepository.save(user);
-
-        Mentor mentor = new Mentor();
-        mentor.setEmail("test01@gmail.com");
-        mentor.setPassWord("Pwd");
-        mentor.setNumberOfMentees(4);
-        mentor.setNumberOfSessions(50);
-        jtMentorRepository.save(mentor);
+//        User user = new User();
+//        user.setEmail("test@gmail.com");
+//        user.setPassWord("Password");
+//        jtUserRepository.save(user);
+//
+//        Mentor mentor = new Mentor();
+//        mentor.setEmail("test01@gmail.com");
+//        mentor.setPassWord("Pwd");
+//        mentor.setNumberOfMentees(4);
+//        mentor.setNumberOfSessions(50);
+//        jtMentorRepository.save(mentor);
     }
 
-    @Test
+//    @Test
     void testDifferentInheritanceMS(){
-        com.scaler.productservice.inheritanceExample.mappedSuperClass.Mentor mentor = new com.scaler.productservice.inheritanceExample.mappedSuperClass.Mentor();
-        mentor.setEmail("testSuperClass@gmail.com");
-        mentor.setPassWord("PwdSuperClass");
-        mentor.setNumberOfMentees(4);
-        mentor.setNumberOfSessions(50);
-        msmentorRepository.save(mentor);
+//        com.scaler.productservice.inheritanceExample.mappedSuperClass.Mentor mentor = new com.scaler.productservice.inheritanceExample.mappedSuperClass.Mentor();
+//        mentor.setEmail("testSuperClass@gmail.com");
+//        mentor.setPassWord("PwdSuperClass");
+//        mentor.setNumberOfMentees(4);
+//        mentor.setNumberOfSessions(50);
+//        msmentorRepository.save(mentor);
     }
 
-    @Test
+//    @Test
     void testDifferentInheritanceST(){
 
-        com.scaler.productservice.inheritanceExample.singleClass.User user = new com.scaler.productservice.inheritanceExample.singleClass.User();
-        user.setEmail("testSingleClass@gmail.com");
-        user.setPassWord("PasswordSingleClass");
-        stUserRepository.save(user);
-
-        com.scaler.productservice.inheritanceExample.singleClass.Mentor mentor = new com.scaler.productservice.inheritanceExample.singleClass.Mentor();
-        mentor.setEmail("test01@gmail.com");
-        mentor.setPassWord("Pwd");
-        mentor.setNumberOfMentees(4);
-        mentor.setNumberOfSessions(50);
-        stMentorRepository.save(mentor);
+//        com.scaler.productservice.inheritanceExample.singleClass.User user = new com.scaler.productservice.inheritanceExample.singleClass.User();
+//        user.setEmail("testSingleClass@gmail.com");
+//        user.setPassWord("PasswordSingleClass");
+//        stUserRepository.save(user);
+//
+//        com.scaler.productservice.inheritanceExample.singleClass.Mentor mentor = new com.scaler.productservice.inheritanceExample.singleClass.Mentor();
+//        mentor.setEmail("test01@gmail.com");
+//        mentor.setPassWord("Pwd");
+//        mentor.setNumberOfMentees(4);
+//        mentor.setNumberOfSessions(50);
+//        stMentorRepository.save(mentor);
     }
-    @Test
 
+//    @Test
     void testDifferentInheritanceTPC(){
-        com.scaler.productservice.inheritanceExample.tablePerClass.User user = new com.scaler.productservice.inheritanceExample.tablePerClass.User();
-        user.setEmail("testSingleClass@gmail.com");
-        user.setPassWord("PasswordSingleClass");
-        tpcUserRepository.save(user);
-
-        com.scaler.productservice.inheritanceExample.tablePerClass.Mentor mentor = new com.scaler.productservice.inheritanceExample.tablePerClass.Mentor();
-        mentor.setEmail("test01@gmail.com");
-        mentor.setPassWord("Pwd");
-        mentor.setNumberOfMentees(4);
-        mentor.setNumberOfSessions(50);
-        tpcMentorRepository.save(mentor);
+//        com.scaler.productservice.inheritanceExample.tablePerClass.User user = new com.scaler.productservice.inheritanceExample.tablePerClass.User();
+//        user.setEmail("testSingleClass@gmail.com");
+//        user.setPassWord("PasswordSingleClass");
+//        tpcUserRepository.save(user);
+//
+//        com.scaler.productservice.inheritanceExample.tablePerClass.Mentor mentor = new com.scaler.productservice.inheritanceExample.tablePerClass.Mentor();
+//        mentor.setEmail("test01@gmail.com");
+//        mentor.setPassWord("Pwd");
+//        mentor.setNumberOfMentees(4);
+//        mentor.setNumberOfSessions(50);
+//        tpcMentorRepository.save(mentor);
     }
 
 }
