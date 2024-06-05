@@ -13,6 +13,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.Rollback;
+
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class ProductTest {
@@ -23,20 +27,24 @@ public class ProductTest {
     private CategoryRepository categoryRepository;
 
     @Test
+    @Transactional
+    @Rollback(value = false)
     void savingProductAndCategory(){
-        Category category = new Category();
-        category.setName("Mobile Phone");
-        category.setDescription("This is a Phone Category");
-        //categoryRepository.save(category);
+        Category category = categoryRepository.findById(102L).get();
+//        category.setName("Laptop");
+//        category.setDescription("This is a Laptop Category");
+//        categoryRepository.save(category);
 
         Product product = new Product();
-        product.setDescription("This is a Phone");
+        product.setDescription("This is a Laptop");
         product.setCategory(category);
-        product.setPrice(50000.00);
-        product.setTitle("I Phone");
-        product.setImageUrl("Iphone.com");
+        product.setPrice(150000.00);
+        product.setTitle("I Mac");
+        product.setImageUrl("Apple.com");
         productRepositories.save(product);
     }
+
+
 
     @Test
     @Transactional
@@ -46,6 +54,32 @@ public class ProductTest {
         Category category = product.getCategory();
         System.out.println("Category name is : " + category.getName());
 
+    }
+
+    @Test
+    @Transactional
+    @Rollback(false)
+    void saveProductForCategory(){
+        Category category = categoryRepository.findById(52l).get();
+        Product product = new Product();
+        product.setDescription("This is a Phone");
+        product.setCategory(category);
+        product.setPrice(95000.00);
+        product.setTitle("Samsung");
+        product.setImageUrl("Samsung.com");
+
+        productRepositories.save(product);
+    }
+
+    @Test
+    @Transactional
+    void getProductsForCategory(){
+        List<Category> categories = categoryRepository.findAll();
+        for(Category category : categories){
+            for(Product product : category.getProducts()){
+                System.out.println(product.getTitle()+" "+product.getPrice()+" "+category.getName());
+            }
+        }
     }
 
     @Test
