@@ -18,6 +18,6 @@ public class Category extends BaseModel{
     private String name;
     private String description;
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY,cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
     private List<Product> products;
 }

@@ -8,9 +8,12 @@ import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.repositories.CategoryRepository;
 import com.scaler.productservice.repositories.ProductRepositories;
+import com.scaler.productservice.services.ProductService;
+import com.scaler.productservice.services.SelfProductService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
@@ -25,6 +28,9 @@ public class ProductTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Qualifier("productService")
+    @Autowired
+    private ProductService productService;
 
     @Test
     @Transactional
@@ -86,5 +92,11 @@ public class ProductTest {
     void deleteProduct(){
         productRepositories.deleteById(2L);
     }
+
+//    @Test
+//    void checkWorkingFine() throws NotFoundException {
+//        SelfProductService selfProductService = new SelfProductService(productService);
+//        selfProductService.getSingleProduct(1L);
+//    }
 
 }
