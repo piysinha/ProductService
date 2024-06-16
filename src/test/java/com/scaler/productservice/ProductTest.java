@@ -1,9 +1,5 @@
 package com.scaler.productservice;
 
-import com.scaler.productservice.clients.fakeStoreApi.FakeStoreClient;
-import com.scaler.productservice.clients.fakeStoreApi.FakeStoreProductDto;
-import com.scaler.productservice.controllers.ProductController;
-import com.scaler.productservice.exceptions.NotFoundException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.repositories.CategoryRepository;
@@ -28,9 +24,6 @@ public class ProductTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
-    @Qualifier("productService")
-    @Autowired
-    private ProductService productService;
 
     @Test
     @Transactional
@@ -98,5 +91,13 @@ public class ProductTest {
 //        SelfProductService selfProductService = new SelfProductService(productService);
 //        selfProductService.getSingleProduct(1L);
 //    }
+
+    @Test
+    void executeCustomQueries(){
+        List<Product> products = productRepositories.getByIdAndTitle(52l, "Mobile Phone");
+        for(Product product : products){
+            System.out.println(product.getTitle()+" "+product.getPrice()+" "+product.getId());
+        }
+    }
 
 }

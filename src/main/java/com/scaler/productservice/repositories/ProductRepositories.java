@@ -2,6 +2,7 @@ package com.scaler.productservice.repositories;
 
 import com.scaler.productservice.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface ProductRepositories extends JpaRepository<Product, Long> {
 
     List<Product> findByTitleIgnoreCaseStartingWith(String title);
 
-
-
+    @Query("select p from Product p where p.id = :id and p.category.name = :categoryName")
+    public List<Product> getByIdAndTitle(Long id, String categoryName);
 
 }

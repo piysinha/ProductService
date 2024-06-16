@@ -3,6 +3,7 @@ package com.scaler.productservice.services;
 import com.scaler.productservice.dtos.ProductDto;
 import com.scaler.productservice.exceptions.NotFoundException;
 import com.scaler.productservice.models.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
