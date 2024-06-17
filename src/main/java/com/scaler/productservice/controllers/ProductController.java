@@ -7,6 +7,7 @@ import com.scaler.productservice.models.Product;
 import com.scaler.productservice.repositories.ProductRepositories;
 import com.scaler.productservice.services.CategoryService;
 import com.scaler.productservice.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,7 +27,7 @@ public class ProductController{
     private ProductService productService;
     private ProductRepositories productRepositories;
 
-    public ProductController(ProductService productService, ProductRepositories productRepositories) {
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService, ProductRepositories productRepositories) {
         this.productService = productService;
         this.productRepositories = productRepositories;
     }
@@ -34,7 +35,9 @@ public class ProductController{
     @GetMapping()
     //Controller is nothing but a set of methods
     public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+        List<Product> products = productService.getAllProducts();
+        //products.get(0).setPrice(100);
+        return products;
     }
 
     @GetMapping("/{productId}")
