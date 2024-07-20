@@ -1,15 +1,19 @@
 package com.scaler.productservice.controllers;
 
+import com.scaler.productservice.clients.authenticationclient.AuthenticationClient;
+import com.scaler.productservice.clients.authenticationclient.dtos.Role;
+import com.scaler.productservice.clients.authenticationclient.dtos.SessionStatus;
+import com.scaler.productservice.clients.authenticationclient.dtos.ValidateResponseDto;
 import com.scaler.productservice.dtos.ProductDto;
 import com.scaler.productservice.exceptions.NotFoundException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.repositories.ProductRepositories;
-import com.scaler.productservice.services.CategoryService;
 import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +30,47 @@ public class ProductController{
 
     private ProductService productService;
     private ProductRepositories productRepositories;
+    private AuthenticationClient authenticationClient;
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService, ProductRepositories productRepositories) {
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService, ProductRepositories productRepositories, AuthenticationClient authenticationClient) {
         this.productService = productService;
         this.productRepositories = productRepositories;
+        this.authenticationClient = authenticationClient;
     }
 
+    //Make only admins to be able to access all products
     @GetMapping()
     //Controller is nothing but a set of methods
-    public List<Product> getAllProducts(){
+    public ResponseEntity<List<Product>> getAllProducts(@Nullable @RequestHeader("AUTH_TOKEN") String token,
+                                                        @Nullable @RequestHeader("USER_ID") Long userId){
+//        if(token == null || token.isEmpty() || userId == null){
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        //validating token from the user service
+//        ValidateResponseDto response = authenticationClient.validate(token,userId);
+//
+//        //check if token is valid
+//        if(response.getSessionStatus().equals(SessionStatus.INVALID)){
+//            new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+//
+//        //check if user has permissions
+//
+//        boolean isUserAdmin = false;
+//        for(Role role : response.getUserDto().getRoles()){
+//            if(role.getRole().equals("ADMIN")){
+//                isUserAdmin = true;
+//            }
+//        }
+//
+//        if(isUserAdmin == false){
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
+
         List<Product> products = productService.getAllProducts();
         //products.get(0).setPrice(100);
-        return products;
+        return new ResponseEntity<>(products,HttpStatus.OK);
     }
 
     @GetMapping("/{productId}")
