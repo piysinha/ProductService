@@ -24,7 +24,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.OK;
 
 /*This is a rest controller*/
-@RestController("")
+@RestController
 @RequestMapping("/products")
 public class ProductController{
 
@@ -88,7 +88,7 @@ public class ProductController{
         ResponseEntity<Product> response = new ResponseEntity(
                 productService.getSingleProduct(productId),
                 headers,
-                OK
+                HttpStatus.OK
         );
         return response;
     }

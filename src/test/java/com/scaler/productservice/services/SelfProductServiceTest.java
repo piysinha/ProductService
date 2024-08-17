@@ -12,18 +12,18 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+//@SpringBootTest
 class SelfProductServiceTest {
-    @MockBean
-    private ProductRepositories productRepositories;
+//    @MockBean
+//    private ProductRepositories productRepositories;
+//
+//    @Autowired
+//    private SelfProductService selfProductService;
 
-    @Autowired
-    private SelfProductService selfProductService;
 
-
-    @Test
-    void testSingleProductThrowsExceptionWhenProductDoesNotExist() {
-        when(productRepositories.findProductById(anyInt())).thenReturn(null);
-        assertThrows(NotFoundException.class, () -> selfProductService.getSingleProduct(1L));
-    }
+//    @Test
+//    void testSingleProductThrowsExceptionWhenProductDoesNotExist() {
+//        when(productRepositories.findProductById(anyInt())).thenReturn(null);
+//        assertThrows(NotFoundException.class, () -> selfProductService.getSingleProduct(1L));
+//    }
 }

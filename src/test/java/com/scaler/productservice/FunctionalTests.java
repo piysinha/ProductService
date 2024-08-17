@@ -10,17 +10,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductController.class)
-public class FunctionalTests {
+//@WebMvcTest(ProductController.class)
+//public class FunctionalTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ProductController productController;
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Autowired
+//    private ProductController productController;
 
 //    @Test
 //    void testGetAllProducts() throws Exception {
 //        mockMvc.perform(get("/products")).andExpect(status().is(200));
 //    }
-}
+//}

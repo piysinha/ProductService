@@ -7,6 +7,8 @@ import com.scaler.productservice.exceptions.NotFoundException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -17,19 +19,21 @@ import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service(value = "fakeStoreProductService")
+@Primary
 public class FakeStoreProductServiceImpl implements ProductService{
 
     private RestTemplateBuilder restTemplateBuilder;
     private FakeStoreClient fakeStoreClient;
+    private Map<Long,Object> fakeStoreProduct = new HashMap<>();
+    private RedisTemplate<Long,Object> redisTemplate;
 
-    public FakeStoreProductServiceImpl(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient) {
+    public FakeStoreProductServiceImpl(RestTemplateBuilder restTemplateBuilder, FakeStoreClient fakeStoreClient, RedisTemplate<Long,Object> redisTemplate) {
         this.restTemplateBuilder = restTemplateBuilder;
         this.fakeStoreClient = fakeStoreClient;
+        this.redisTemplate = redisTemplate;
     }
 
     private <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod,String url, @Nullable Object request,
@@ -67,13 +71,41 @@ public class FakeStoreProductServiceImpl implements ProductService{
         return answer;
     }
 
+     /*
+    Return a Product object with all the details of the fetched product.
+    The ID of the category will be null but the name of the category shall be
+    correct.
+     */
+
     @Override
     public Optional<Product> getSingleProduct(Long productId) throws NotFoundException {
-        FakeStoreProductDto fakeStoreProductDtos = fakeStoreClient.getSingleProduct(productId);
-        if(fakeStoreProductDtos == null){
+        FakeStoreProductDto fakeStoreProductDto = (FakeStoreProductDto) redisTemplate.opsForHash().get(productId,"PRODUCTS");
+//        if(fakeStoreProduct.containsKey(productId)){
+//            return Optional.of(convertFakeStoreProductDtoToProduct((FakeStoreProductDto)fakeStoreProduct.get(productId)));
+//        }
+
+        if(fakeStoreProductDto!=null){
+            return Optional.of(convertFakeStoreProductDtoToProduct(fakeStoreProductDto));
+       }
+
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDto> response =  restTemplate.getForEntity(
+                "https://fakestoreapi.com/products/{id}",
+                FakeStoreProductDto.class, productId);
+
+        FakeStoreProductDto productDto = response.getBody();
+
+//        FakeStoreProductDto fakeStoreProductDtos = fakeStoreClient.getSingleProduct(productId);
+
+        if(productDto == null){
             return Optional.empty();
         }
-        return Optional.of(convertFakeStoreProductDtoToProduct(fakeStoreProductDtos));
+
+        redisTemplate.opsForHash().put(productId,"PRODUCTS",productDto);
+
+//        fakeStoreProduct.put(productId,fakeStoreProductDtos);
+
+        return Optional.of(convertFakeStoreProductDtoToProduct(productDto));
     }
 
     @Override
