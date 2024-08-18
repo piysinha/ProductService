@@ -8,6 +8,7 @@ import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 @Service(value = "fakeStoreProductService")
-@Primary
+//@Primary
 public class FakeStoreProductServiceImpl implements ProductService{
 
     private RestTemplateBuilder restTemplateBuilder;
@@ -45,7 +46,6 @@ public class FakeStoreProductServiceImpl implements ProductService{
         ResponseExtractor<ResponseEntity<T>> responseExtractor = restTemplate.responseEntityExtractor(responseType);
         return restTemplate.execute(url, httpMethod, requestCallback, responseExtractor, uriVariables);
     }
-
     /*Creating a common method which will convert the fakeStoreProductDto to product DTO
     * instead of converting the product dto to Product in every method*/
     private Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto){
@@ -59,6 +59,11 @@ public class FakeStoreProductServiceImpl implements ProductService{
         product.setCategory(category);
         product.setImageUrl(fakeStoreProductDto.getImageUrl());
         return product;
+    }
+
+    @Override
+    public Page<Product> getProducts(int noOfProducts, int offSet){
+        return null;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.scaler.productservice.clients.authenticationclient.AuthenticationClie
 import com.scaler.productservice.clients.authenticationclient.dtos.Role;
 import com.scaler.productservice.clients.authenticationclient.dtos.SessionStatus;
 import com.scaler.productservice.clients.authenticationclient.dtos.ValidateResponseDto;
+import com.scaler.productservice.dtos.GetProductRequestDto;
 import com.scaler.productservice.dtos.ProductDto;
 import com.scaler.productservice.exceptions.NotFoundException;
 import com.scaler.productservice.models.Category;
@@ -11,6 +12,7 @@ import com.scaler.productservice.models.Product;
 import com.scaler.productservice.repositories.ProductRepositories;
 import com.scaler.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -32,10 +34,17 @@ public class ProductController{
     private ProductRepositories productRepositories;
     private AuthenticationClient authenticationClient;
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService, ProductRepositories productRepositories, AuthenticationClient authenticationClient) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService, ProductRepositories productRepositories, AuthenticationClient authenticationClient) {
         this.productService = productService;
         this.productRepositories = productRepositories;
         this.authenticationClient = authenticationClient;
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<Product>> getProducts(@RequestBody GetProductRequestDto requestDto){
+        return ResponseEntity.of(Optional.ofNullable(productService.getProducts(
+                requestDto.getNoOfResult(), requestDto.getOffSet()
+        )));
     }
 
     //Make only admins to be able to access all products
