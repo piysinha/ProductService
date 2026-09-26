@@ -20,6 +20,10 @@ public class CustomJwtAuthenticationConverter implements Converter<Jwt, Abstract
     {
         List<String> roles = jwt.getClaim("roles");
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        // A token without a roles claim grants no roles, rather than failing authentication.
+        if (roles == null) {
+            return grantedAuthorities;
+        }
 
         for (String role: roles) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role));
